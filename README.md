@@ -1,1 +1,1 @@
-# *Nxty.Core - Nxty .NET Core Library*
+# *Nxty .NET Core Library*
