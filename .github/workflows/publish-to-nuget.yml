@@ -72,6 +72,8 @@ jobs:
               dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
           }
 
+      - run: ls -rtla
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         if: ${{ !contains(github.ref, 'beta') }}
