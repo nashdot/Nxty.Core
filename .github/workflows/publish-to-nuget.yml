@@ -18,9 +18,19 @@ jobs:
   create_nuget:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4.2.2
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0 # Get all history to allow automatic versioning using MinVer
+
+    - run: ls -rtla
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      if: ${{ !contains(github.ref, 'beta') }}
+      with:
+        draft: false
+        name: ${{ github.ref_name }} Release
+        body_path: CHANGELOG.md
 
     # Setup .Net SDK for All Versions
     - name: Setup .NET
@@ -72,12 +82,3 @@ jobs:
               dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
           }
 
-      - run: ls -rtla
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
-        if: ${{ !contains(github.ref, 'beta') }}
-        with:
-          draft: false
-          name: ${{ github.ref_name }} Release
-          body_path: ${{ github.workspace }}/CHANGELOG.md
