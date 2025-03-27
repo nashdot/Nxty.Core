@@ -1,0 +1,35 @@
+name: Publish Nuget Package
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - name: Setup .Net SDK for All Versions
+        uses: actions/setup-dotnet@v4.3.0
+        with:
+          dotnet-version: |
+            8.x
+            9.x
+
+      - name: Make Nuget Packages
+        run: dotnet pack -c Release
+
+      - name: Publish To Nuget
+        run: dotnet nuget push "Src/**/*.nupkg" -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.NUGET_API_KEY }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2.2.1
+        if: ${{ !contains(github.ref, 'beta') }}
+        with:
+          draft: false
+          name: ${{ github.ref_name }} Release
+          body_path: changelog.md
