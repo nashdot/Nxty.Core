@@ -4,6 +4,21 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    
+    <Description>Nxty .NET Core Library.</Description>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>http, rest,  domain</PackageTags>
+    <OutputType>Library</OutputType>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\README.md" Pack="true" PackagePath="\" Visible="false"/>
+        <None Include="..\icon.png" Pack="true" PackagePath="\" Visible="false"/>
+        <None Include="..\..\changelog.md" Pack="false" Visible="false"/>
+    </ItemGroup>
 
 </Project>
