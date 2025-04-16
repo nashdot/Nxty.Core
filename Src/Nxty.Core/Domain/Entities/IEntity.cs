@@ -5,6 +5,9 @@
 /// </summary>
 public interface IEntity
 {
+    public List<IDomainEvent> DomainEvents { get; }
+    public void ClearDomainEvents();
+    public void Raise(IDomainEvent domainEvent);
 }
 
 /// <summary>
